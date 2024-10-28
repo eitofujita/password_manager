@@ -1,0 +1,33 @@
+import hashlib
+import json 
+import os
+
+USER_DATA_FILE = "user_data.json"
+
+if os.path.ecists(USER_DATA_FILE):
+  with open(USER_DATA_FIL, "r") as f:
+ user_db =json.load(f)
+else:
+ user_db = {}
+
+def save_user_db():
+ with open(USER_DATA_FIle,"w") as f:
+ json.dump(user_db,f)
+
+def hash_password(password):
+sha3 = hashlib.sha3_256()
+sha3.update(password.encode('utf-8'))
+return sha3.hexdigest()
+
+def register_user(username, password):
+ if username in user_db:
+  print(f"User '{username}' is already registered.")
+ return 
+ user_db[username] =hash_password(password)
+save_user_db()
+print(f"User'{username}'has been registered.")
+
+def authenticate_user(username,password):
+hashed_password=hash_password(password)
+if user_db.get(username)==hashed_password:
+print("Authentication successful")
